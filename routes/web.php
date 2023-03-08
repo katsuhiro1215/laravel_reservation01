@@ -21,6 +21,7 @@ Route::get('/', function () {
 Route::prefix('manager')
 ->middleware('can:manager-higher')
 ->group(function() {
+    Route::get('events/past', [EventController::class, 'past'])->name('events.past');
     Route::resource('events', EventController::class);
 });
 
