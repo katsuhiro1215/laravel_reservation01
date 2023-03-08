@@ -52,17 +52,17 @@
                                 {{ $event->max_people }}
                             </div>
                             <div class="flex sapce-x-4 justify-around">
-                                @if($event->is_visible)
+                                @if ($event->is_visible)
                                     表示
                                 @else
                                     非表示
                                 @endif
                             </div>
                             <div class="flex items-center justify-end mt-4">
-                                @if($event->eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
-                                <x-button class="ml-4">
-                                    編集する
-                                </x-button>
+                                @if ($event->eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
+                                    <x-button class="ml-4">
+                                        編集する
+                                    </x-button>
                                 @endif
                             </div>
                         </div>
@@ -71,4 +71,40 @@
             </div>
         </div>
     </div>
+
+
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="max-w-2xl py-4 mx-auto">
+                    @if (!$users->isEmpty())
+                        予約状況
+                        <table class="table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                                        予約者名</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        予約人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($reservations as $reservation)
+                                    @if (is_null($reservation['canceled_date']))
+                                        <tr>
+                                            <td class="px-4 py-3">{{ $reservation['name'] }}</td>
+                                            <td class="px-4 py-3">{{ $reservation['number_of_people'] }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>
