@@ -55,6 +55,8 @@ class EventController extends Controller
         // dd($check);
 
         if ($check) {
+            session()->flash('status', 'この時間帯は既に他の予約が存在します。');
+            
             return view('manager.events.create');
         }
 
