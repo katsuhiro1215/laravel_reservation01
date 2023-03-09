@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            イベント管理
+            本日以降のイベント一覧
         </h2>
     </x-slot>
 
@@ -10,6 +10,13 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <section class="text-gray-600 body-font">
                     <div class="container px-5 py-4 mx-auto">
+
+                        @if (session('status'))
+                            <div class="mb-4 font-medium text-sm text-green-600">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
                         <div class="flex justify-between">
                             <button onclick="location.href='{{ route('events.past') }}'"
                             class="flex mb-4 ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">過去のイベント一覧</button>
@@ -46,7 +53,13 @@
                                             <td class="text-blue-500 px-4 py-3"><a href="{{ route('events.show', ['event' => $event->id]) }}">{{ $event->name }}</a></td>
                                             <td class="px-4 py-3">{{ $event->start_date }}</td>
                                             <td class="px-4 py-3">{{ $event->end_date }}</td>
-                                            <td class="px-4 py-3">後ほど</td>
+                                            <td class="px-4 py-3">
+                                                @if (is_null($event->number_of_people))
+                                                    0
+                                                @else
+                                                    {{ $event->number_of_people }}
+                                                @endif
+                                            </td>
                                             <td class="px-4 py-3">{{ $event->max_people }}</td>
                                             <td class="px-4 py-3">{{ $event->is_visible }}</td>
                                         </tr>
